@@ -1,0 +1,24 @@
+package com.anz.fx.calculator;
+
+public class FxCalculatorService {
+
+	static String convertCurrency(String inputString) {
+		
+		//Replace empty string
+		String currencyString =  inputString.replace(" ", "");
+		String base = currencyString.substring(0,3);
+		String term = currencyString.substring(currencyString.length()-3);
+		Double currency = Double.valueOf(currencyString.substring(3,currencyString.indexOf('i')));
+		
+		System.out.println(base);
+		System.out.println(term);
+		System.out.println(currency);
+		return null;
+		
+	}
+	
+	public static void main(String ar[]) {
+		String s = "AUD 100.01 in USD";
+		convertCurrency(s);
+	}
+}

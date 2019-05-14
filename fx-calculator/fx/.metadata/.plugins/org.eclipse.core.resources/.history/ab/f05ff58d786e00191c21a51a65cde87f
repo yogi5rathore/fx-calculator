@@ -1,0 +1,9 @@
+package com.anz.fx.calculator.constant;
+
+public class FxConstants {
+
+	public static final String DIRECT="D";
+	public static final String INVERSION="Inv";
+	public static final String EXACT="1:1";
+	
+}

@@ -1,0 +1,53 @@
+package com.anz.fx.calculator;
+
+import static com.anz.fx.calculator.cache.FxCache.CURRENCY_MAP;
+import static com.anz.fx.calculator.cache.FxCache.CURRENCY_MATRIX;
+
+import java.io.IOException;
+
+import com.anz.fx.calculator.cache.FxCacheManager;
+import com.anz.fx.calculator.constant.FeedEnum;
+
+public class FxCalculatorService {
+
+	static String convertCurrency(String inputString) {
+
+		// Replace empty string
+		String currencyString = inputString.replace(" ", "");
+		String base = currencyString.substring(0, 3);
+		String term = currencyString.substring(currencyString.length() - 3);
+		Double currency = Double.valueOf(currencyString.substring(3, currencyString.indexOf('i')));
+
+		System.out.println(base);
+		System.out.println(term);
+		System.out.println(currency);
+
+		double result = 0;
+		int baseIndex = CURRENCY_MAP.get(base);
+		int termIndex = CURRENCY_MAP.get(term);
+		//FeedEnum feed = FeedEnum.valueOf(CURRENCY_MATRIX[baseIndex][termIndex]);
+
+		if (!FeedEnum.contains(CURRENCY_MATRIX[baseIndex][termIndex])) {
+			result = FxCalculator.convertFromBaseToTerm(base, CURRENCY_MATRIX[baseIndex][termIndex], currency);
+			result = FxCalculator.convertFromBaseToTerm(CURRENCY_MATRIX[baseIndex][termIndex], term, result);
+
+		} else {
+			result = FxCalculator.convertFromBaseToTerm(base, CURRENCY_MATRIX[baseIndex][termIndex], currency);
+		}
+		String resultString = base + " " + currency + " = " + result + " " + term;
+		return resultString;
+
+	}
+
+	public static void main(String ar[]) {
+		String s = "AUD 1 in JPY";
+		try {
+			FxCacheManager.initCache();
+			System.out.println(convertCurrency(s));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+}

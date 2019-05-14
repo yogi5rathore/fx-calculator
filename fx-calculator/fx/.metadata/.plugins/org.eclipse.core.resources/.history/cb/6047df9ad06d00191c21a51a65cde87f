@@ -1,0 +1,4 @@
+fx.datasource.url=jdbc:mysql://localhost:3306/myDb
+fx.datasource.username=user1
+fx.datasource.password=pass
+fx.datasource.driver-class-name=com.mysql.cj.jdbc.Driver

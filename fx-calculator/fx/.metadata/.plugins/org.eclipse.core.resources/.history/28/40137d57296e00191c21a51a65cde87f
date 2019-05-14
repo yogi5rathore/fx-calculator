@@ -1,0 +1,80 @@
+package com.anz.fx.calculator;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.anz.fx.calculator.config.FxConfig;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
+public class ExcelReader {
+	public static final String SAMPLE_XLSX_FILE_PATH = "D:\\Personal\\ANZ\\config\\Currency_Matrix.xls";
+
+	@Autowired
+	private FxConfig config;
+
+	public static void main(String ar[]) throws IOException, InvalidFormatException, EncryptedDocumentException,
+			org.apache.poi.openxml4j.exceptions.InvalidFormatException {
+
+		Workbook workbook = WorkbookFactory.create(new File(SAMPLE_XLSX_FILE_PATH));
+
+		Sheet sheet = workbook.getSheetAt(0);
+		
+
+		// Create a DataFormatter to format and get each cell's value as String
+		DataFormatter dataFormatter = new DataFormatter();
+		
+		Row row1 = sheet.getRow(0);
+		Map<String,Integer> map = new HashMap<>();
+		for(int cellIndex=0;cellIndex<=row1.getLastCellNum();cellIndex++) {
+			if(row1.getCell(cellIndex)!=null) {
+				map.put(row1.getCell(cellIndex).getStringCellValue(),cellIndex);
+			}
+		}
+		
+		int rowNum = sheet.getLastRowNum();
+		int colNum = sheet.getRow(0).getLastCellNum();
+		
+		String [][] array= new String[rowNum][colNum];
+	
+		for(int rowIndex=0;rowIndex<=rowNum;rowIndex++) {
+			for(int colIndex=0;colIndex < colNum;colIndex++) {
+				if(sheet.getRow(rowIndex)!=null
+						&& sheet.getRow(rowIndex).getCell(colIndex)!=null) {
+					array[rowIndex][colIndex] = sheet.getRow(rowIndex).getCell(colIndex).getStringCellValue();
+				}
+				
+			}
+		}
+		
+		
+		for(int rowIndex=0;rowIndex<=rowNum;rowIndex++) {
+			for(int colIndex=0;colIndex < colNum;colIndex++) {
+				System.out.print(array[rowIndex][colIndex]+"\t");
+			}
+			System.out.println();
+		}
+		
+		
+		
+		
+		
+		/*
+		 * System.out.println(map); System.out.println(array[10][1]);
+		 * System.out.println(array[5][5]); System.out.println(array[0][0]);
+		 */
+		
+
+		// Closing the workbook
+		workbook.close();
+	}
+}

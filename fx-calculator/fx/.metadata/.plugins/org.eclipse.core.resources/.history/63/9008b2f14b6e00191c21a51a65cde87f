@@ -1,0 +1,20 @@
+package com.anz.fx.calculator.config;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+@Configuration
+@ConfigurationProperties(prefix = "fx")
+@PropertySource("classpath:fx.properties")
+public class FxConfig {
+	private String fileURL;
+
+	public String getFileURL() {
+		return fileURL;
+	}
+
+	public void setFileURL(String fileURL) {
+		this.fileURL = fileURL;
+	}
+}

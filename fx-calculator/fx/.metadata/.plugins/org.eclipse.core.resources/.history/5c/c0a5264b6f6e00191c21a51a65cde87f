@@ -1,0 +1,12 @@
+package com.anz.fx.calculator.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class DeleteMe {
+	@Autowired
+	FxConfig config;
+	
+	public void test() {
+		System.out.println(config.getFileURL());
+	}
+}

@@ -1,0 +1,60 @@
+package com.anz.fx.calculator;
+
+import static com.anz.fx.calculator.cache.FxCache.CURRENCY_MAP;
+import static com.anz.fx.calculator.cache.FxCache.CURRENCY_MATRIX;
+import static com.anz.fx.calculator.cache.FxCache.CURRENCY_PRECISION_MAP;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
+
+import com.anz.fx.calculator.constant.FeedEnum;
+import com.anz.fx.calculator.exception.FxException;
+import com.anz.fx.calculator.util.FxValidation;
+
+@Service
+public class FxCalculatorService {
+
+	static Logger logger = LogManager.getLogger(FxCalculatorService.class);
+
+	public static String convertCurrency(String inputString) {
+
+		// Replace empty string
+		String currencyString = inputString.replace(" ", "");
+		String base = currencyString.substring(0, 3);
+		String term = currencyString.substring(currencyString.length() - 3);
+		String currencyValueString = currencyString.substring(3, currencyString.indexOf('i'));
+
+		logger.info("Base - " + base);
+		logger.info("Term - " + term);
+		logger.info("Base Currency - " + currencyValueString);
+
+		Double currency = 0.0;
+		String resultString = null;
+
+		try {
+			FxValidation.validate(base, term, currencyValueString);
+			double result = 0;
+			int baseIndex = CURRENCY_MAP.get(base);
+			int termIndex = CURRENCY_MAP.get(term);
+			currency = Double.valueOf(currencyValueString);
+
+			if (!FeedEnum.contains(CURRENCY_MATRIX[baseIndex][termIndex])) {
+				result = FxCalculator.convertFromBaseToTerm(base, CURRENCY_MATRIX[baseIndex][termIndex], currency);
+				result = FxCalculator.convertFromBaseToTerm(CURRENCY_MATRIX[baseIndex][termIndex], term, result);
+
+			} else {
+				result = FxCalculator.convertFromBaseToTerm(base, term, currency);
+			}
+			int precison = CURRENCY_PRECISION_MAP.get(term);
+			String tempResultString = String.format("%." + precison + "f", result);
+
+			resultString = base + " " + currency + " = " + tempResultString + " " + term;
+		} catch (FxException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return resultString;
+
+	}
+}

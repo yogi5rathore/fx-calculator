@@ -1,0 +1,15 @@
+package com.anz.fx.calculator.exception;
+
+public class FxException extends Exception {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8755745264606086072L;
+
+	FxException() {
+		super();
+	}
+	
+
+}

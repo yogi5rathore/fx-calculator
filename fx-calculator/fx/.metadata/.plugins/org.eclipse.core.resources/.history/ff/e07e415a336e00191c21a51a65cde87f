@@ -1,0 +1,133 @@
+package com.anz.fx.calculator;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.anz.fx.calculator.config.FxConfig;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
+public class ExcelReader {
+	public static final String SAMPLE_XLSX_FILE_PATH = "D:\\Personal\\ANZ\\config\\Currency_Matrix.xls";
+
+	@Autowired
+	private FxConfig config;
+	static String [][] array;
+	static Map<String,Integer> map;
+	static Map<String,Double> currencyMap;
+
+	public static void main(String ar[]) throws IOException, InvalidFormatException, EncryptedDocumentException,
+			org.apache.poi.openxml4j.exceptions.InvalidFormatException {
+
+		Workbook workbook = WorkbookFactory.create(new File(SAMPLE_XLSX_FILE_PATH));
+
+		Sheet sheet = workbook.getSheetAt(0);
+		map = new HashMap<>();
+		currencyMap = new HashMap<>();
+
+		// Create a DataFormatter to format and get each cell's value as String
+		DataFormatter dataFormatter = new DataFormatter();
+		
+		Row row1 = sheet.getRow(0);
+		
+		for(int cellIndex=0;cellIndex<=row1.getLastCellNum();cellIndex++) {
+			if(row1.getCell(cellIndex)!=null) {
+				map.put(row1.getCell(cellIndex).getStringCellValue(),cellIndex);
+			}
+		}
+		
+		int rowNum = sheet.getLastRowNum()+1;
+		int colNum = sheet.getRow(0).getLastCellNum();
+		
+		array= new String[rowNum][colNum];
+	
+		for(int rowIndex=0;rowIndex<rowNum;rowIndex++) {
+			for(int colIndex=0;colIndex < colNum;colIndex++) {
+				if(sheet.getRow(rowIndex)!=null
+						&& sheet.getRow(rowIndex).getCell(colIndex)!=null) {
+					array[rowIndex][colIndex] = sheet.getRow(rowIndex).getCell(colIndex).getStringCellValue();
+				}
+				
+			}
+		}
+		
+		
+		for(int rowIndex=0;rowIndex<rowNum;rowIndex++) {
+			for(int colIndex=0;colIndex < colNum;colIndex++) {
+				System.out.print(array[rowIndex][colIndex]+"\t");
+			}
+			System.out.println();
+		}
+		
+		for(Map.Entry<String, Integer> entry : map.entrySet()) {
+			System.out.println(entry.getKey() + "-" +entry.getValue());
+		}
+		
+		currencyMap.put("AUDUSD", 0.8371);
+		currencyMap.put("USDJPY", 119.95);
+		
+		String base = "AUD";
+		String term = "JPY";
+		
+		List<String> valueList = new ArrayList<>();
+		valueList.add("1:1");
+		valueList.add("D");
+		valueList.add("Inv");
+		double val=1;
+		double calculatedVal=0;
+		
+		if( !valueList.contains(array[map.get(base)][map.get(term)])) {
+			 calculatedVal = process(base,array[map.get(base)][map.get(term)],val);
+			 calculatedVal = process(array[map.get(base)][map.get(term)],term, calculatedVal);
+			
+		} else {
+			calculatedVal = process(base,array[map.get(base)][map.get(term)],val);
+		}
+		System.out.println(calculatedVal);
+		
+		
+		
+		
+		
+
+		// Closing the workbook
+		workbook.close();
+	}
+	
+	static double process(String base, String term, Double value) {
+		String selIndex = array[map.get(base)][map.get(term)];
+		Double rate= currencyMap.get(base+term);
+		if(rate==null) {
+			rate = currencyMap.get(term+base);
+		}
+		double result=0;
+		switch(selIndex) {
+		case "D" :
+			result =  value*rate;
+			break;
+			
+		case "1:1" :
+			result =  value;
+			break;
+		
+		case "Inv" :
+			result =  value/rate;
+			break;
+			
+		}
+		return result;
+	}
+	
+	
+}

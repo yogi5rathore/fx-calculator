@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.anz.fx.calculator.config.FxConfig"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.Map.Entry"/>
+<fullyQualifiedTypeName name="org.apache.logging.log4j.Logger"/>
+<fullyQualifiedTypeName name="org.slf4j.LoggerFactory"/>
+<fullyQualifiedTypeName name="org.apache.logging.log4j.LogManager"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Value"/>
+<fullyQualifiedTypeName name="com.anz.fx.calculator.cache.FxCache"/>
+<fullyQualifiedTypeName name="com.anz.fx.calculator.constant.FxConstants"/>
+<fullyQualifiedTypeName name="com.anz.fx.calculator.constant.FeedEnum"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
+<fullyQualifiedTypeName name="javax.websocket.server.PathParam"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+<fullyQualifiedTypeName name="com.anz.fx.calculator.cache.FxCacheManager"/>
+<fullyQualifiedTypeName name="com.anz.fx.calculator.FxCalculatorService"/>
+<fullyQualifiedTypeName name="junit.framework.Assert"/>
+<fullyQualifiedTypeName name="org.junit.Assert"/>
+<fullyQualifiedTypeName name="com.anz.fx.calculator.exception.FxException"/>
+<fullyQualifiedTypeName name="com.anz.fx.calculator.util.FxValidation"/>
+</qualifiedTypeNameHistroy>

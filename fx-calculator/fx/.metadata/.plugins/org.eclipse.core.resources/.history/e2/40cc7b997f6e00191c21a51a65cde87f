@@ -1,0 +1,15 @@
+package com.anz.fx.calculator.constant;
+
+public enum FeedEnum {
+	DIRECT("D"), INVERSION("Inv"), UNITY("1:1");
+
+	private String feed;
+
+	public String getFeed() {
+		return this.feed;
+	}
+
+	FeedEnum(String feed) {
+		this.feed = feed;
+	}
+}

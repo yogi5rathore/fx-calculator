@@ -1,0 +1,13 @@
+package com.anz.fx.calculator.config;
+
+import org.springframework.beans.factory.annotation.Value;
+
+public class DeleteMe {
+	
+	@Value("${spring.datasource.url}")
+	private String name;
+	
+	public void test() {
+		System.out.println(name);
+	}
+}

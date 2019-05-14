@@ -1,0 +1,31 @@
+package com.anz.fx.calculator;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+
+import com.anz.fx.calculator.config.FxConfig;
+
+@SpringBootApplication
+@EnableConfigurationProperties(FxConfig.class)
+public class FxApplication {
+
+	static Logger logger = LogManager.getLogger(FxApplication.class);
+	
+	@Autowired
+	static FxConfig config;
+	public static void main(String[] args) {
+		SpringApplication.run(FxApplication.class, args);
+		/*
+		 * ExcelReader reader = new ExcelReader(); try { //reader.getResult(); } catch
+		 * (EncryptedDocumentException | InvalidFormatException | IOException e) { //
+		 * TODO Auto-generated catch block e.printStackTrace(); }
+		 */
+		logger.info("Hello World -->" +config.getFileURL());
+		//System.out.println("Hello World");
+	}
+	
+}

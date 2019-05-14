@@ -1,0 +1,5 @@
+package com.anz.fx.calculator.util;
+
+public class FxValidation {
+
+}

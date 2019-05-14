@@ -1,0 +1,16 @@
+package com.anz.fx.calculator.cache;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class FxCache {
+	
+	public static String [][]CURRENCY_MATRIX;
+	public static Map<String,Double>CURRENCY_PAIRS_RATE_MAP;
+	
+	FxCache(int row, int col) {
+		CURRENCY_MATRIX = new String [row][col];
+		CURRENCY_PAIRS_RATE_MAP = new HashMap<>();
+	}
+
+}

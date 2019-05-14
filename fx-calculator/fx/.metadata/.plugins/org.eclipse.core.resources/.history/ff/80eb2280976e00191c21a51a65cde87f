@@ -1,0 +1,5 @@
+package com.anz.fx.calculator.config;
+
+public class CurrencyConfig {
+
+}

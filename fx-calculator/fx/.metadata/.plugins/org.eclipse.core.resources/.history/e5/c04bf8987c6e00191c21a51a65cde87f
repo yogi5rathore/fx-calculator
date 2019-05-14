@@ -1,0 +1,11 @@
+package com.anz.fx.calculator;
+
+public class FxCalculatorService {
+
+	String convertCurrency(String couurenyString) {
+		
+		
+		return null;
+		
+	}
+}

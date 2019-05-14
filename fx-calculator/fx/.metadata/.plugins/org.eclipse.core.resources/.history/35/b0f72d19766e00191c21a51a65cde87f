@@ -1,0 +1,15 @@
+package com.anz.fx.calculator.cache;
+
+import java.io.File;
+
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+public class FxCacheManager {
+
+	public static void initCache() {
+		Workbook workbook = WorkbookFactory.create(new File(SAMPLE_XLSX_FILE_PATH));
+		
+	}
+	
+}
